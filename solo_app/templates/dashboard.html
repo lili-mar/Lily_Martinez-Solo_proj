@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styleNewGift.css' %}">   
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container">
+                  
+        <h1>Our CommunEty's gifts - {{ logged_user.first_name }}!</h1>
+        <br>
+        <a href="/communety/today">Back to CommunEty Today</a> 
+      
+        <a class="float-right" href="/communety/logout">Log Out</a>
+        <br><br>
+        <h3>Active and available gifts for the CommunEty</h3>     
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Gift Name</th>
+                    <th>Category</th>                                                
+                    <th colspan="2">Actions</th>                  
+                </tr>
+            </thead>
+            {% for gift in sortGifts %}  
+            {% if gift.status == 0 %} <!--only pending-->                     
+            <tbody>
+                <tr>
+                    <td>{{ gift.name }}</td>
+                    <td>{{  gift.categoryJoin.category  }}</td>                                     
+                    <td><a href="/communety/{{gift.id}}/request">Request</a></td> 
+
+                        <!-- it will probably need to be called with an ID later on -->                                    
+                        <td><a href="/communety/theWall">Message</a></td> 
+                        
+                </tr>
+            </tbody> 
+            {% endif %}               
+            {% endfor %}
+            
+        </table>
+    
+    </div>
+</body>
+</html>

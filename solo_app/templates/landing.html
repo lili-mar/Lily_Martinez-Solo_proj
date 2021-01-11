@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Welcome to the CommunEty -login</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Welcome to the CommunEty!</h1>      
+        <div class="row">
+            <div class="col" id="left">   
+                <br><br><br>
+                <h3>Login</h3>
+                <form class='partlogin' action="/communety/login" method="POST">
+                    {% csrf_token %}
+                        {{ logForm.as_p }}  
+                    <button class="btn btn-success">Login</button>
+                    <br><br>                    
+                </form>  
+                <br>
+                <p>Not yet registered?  <a href="/communety/regPledge"><button class="btn btn-primary">Register</button></a>  </p>
+                <br><br>
+                <div class='pMsgs'>
+                    {% if messages %}
+                        <ul class="messages">    
+                            {% for message in messages %}    
+                                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>                                
+            </div>           
+            <div class= "col" id="right">       
+                <br>
+                <h4>CommunEty is a local service derived from the concept of the gift economy</h4>
+                <br>
+                <h5>where neighbors help Each other.</h5>
+                <p>A gift economy nurtures the communEty bonds which enhance mutual well-being; the economic unit is Everyone("we")
+                    rather than "I," as all flourishing is mutual. <br>
+                    CommunEty's currency is based on gratitude and reciprocity not monetary value.  
+                    This local service will allow CommunEty's members to do their own trading without
+                    any explicit expectations of direct compensation of any goods or services exchanged.
+                </p>
+                <h5>join the CommunEty of abundance for Everyone!</h5>   
+                <br><br>
+                <a href="/communety/Example">Need an example of how the CommunEty works?</a>                      
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- <script>
+    $('form.partlogin').submit(function(e){
+        e.preventDefault()
+        $.ajax({
+            url: '/communety/login',
+            method: 'post',
+            data: $(this).serialize(),
+            success: function(serverResponse){  
+                // alert("You will now be redirected.");
+                $('.pMsgs').html(serverResponse)
+            },
+            failure: function(serverResponse){
+                alert("I want to redirect to -today- what am I doing wrong here???.");
+                //$('.today').html(serverResponse)
+            }
+        })
+        $(this).trigger('reset')  
+    })
+</script>   -->
+
+</html>

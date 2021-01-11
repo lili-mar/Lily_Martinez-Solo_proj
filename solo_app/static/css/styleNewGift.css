@@ -1,0 +1,31 @@
+*{
+    margin:0;
+    padding:0;
+   
+}
+
+.container{
+    
+    width: 2000px;
+    height: auto;
+    background-color: rgb(196, 221, 221);
+}
+
+h1{
+    color:teal;
+   
+}
+
+h3{
+    color: teal;
+    background-color: rgb(202, 205, 50);
+}
+
+
+h4{
+    color: rgb(9, 51, 47)
+}
+
+h6{
+    color: rgb(136, 0, 106);
+}

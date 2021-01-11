@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styleNewGift.css' %}">   
+    <title>New Gift</title>
+</head>
+<body>
+    
+    <div class="container">  
+
+        <h2>Add a New Gift</h2>
+        <a class="float-right" href="/communety/today">Back to CommunEty</a>
+        <br>
+        {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action='/communety/create'  method="POST">
+            {% csrf_token %}            <!--this prevents csrf error -should ALWAYS be here!! --> 
+            <div class="form-group">
+                <label for="name">Short Name:</label> 
+                <input type="text" name="name" id="name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label> 
+                <!-- default status value on views context not here <input type="text" name="category" id="category" class="form-control"> -->
+                <select name="categoryJoin" id="category" class="form-control">                   
+                    {% for catg in categs_list %}
+                        <option value="{{ catg.id }}">{{ catg.category }}</option>
+                    {% endfor %}                 
+                </select>
+            </div>           
+            <div class="form-group">
+                <label for="date">Available Date:</label> 
+                <input type="date" name="available_date" id="available_date" class="form-control" placeholder="YYYY-MM-DD" onfocus="(this.type='date')" value="2021-01-01" >
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" name="description" id="description"   rows="3"></textarea>
+            </div>     
+            
+            <button class="btn btn-primary">Create Gift</button>
+        </form> 
+
+        <br>
+        <hr>
+        <a class="float-right"   href="/communety/dashboard"><strong>Go to Dashboard </strong></a>  
+        <br>
+        <h3> Your Gift history to the CommunEty - {{ logged_user.first_name}} </h3>       
+        {% if my_gifts.count == 0%} 
+            <br><br>
+            <h6> No Gift history yet - Share your abundance today with the CommunEty!</h6>  
+        {% else %}
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Gift Name</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Date created</th>
+                        <th>Date available</th>                                      
+                        <th colspan="3">Actions</th>
+                        
+                    </tr>
+                </thead>
+                {% for gift in my_gifts %}                       
+                        <tbody>
+                            <tr>
+                                <td>{{ gift.name }}</td>
+                                <td>{{  gift.categoryJoin.category  }}</td>
+                                {% if gift.status == 0 %} <!--0=False and 1=True default = 0orFalse-->
+                                    <td>Pending</td>
+                                {% else %}
+                                    <td>Completed</td>
+                                {% endif %}
+
+                                <td>{{ gift.created_at|date:'M d, Y'  }}</td>  <!--Dec. 3, 2020, 3:18 a.m.  VS  Dec 03, 2020 3:18 a.m. --> 
+                                <td>{{ gift.available_date|date:'M d, Y'  }}</td>  <!--Mar 03, 2021 -->                           
+                                <td><a href="/communety/{{gift.id}}/show">Show</a></td> 
+
+                                    <!-- this should only show if available date is > today -->
+                                {% if gift.status == 0 %}                   
+                                    <td><a href="/communety/{{gift.id}}/edit">Edit</a></td> 
+                                    <td><a href="/communety/{{gift.id}}/delete">Delete</a></td>    
+                                {% endif %}
+                                    
+                            </tr>
+                        </tbody>                
+                {% endfor %}
+                
+            </table>
+        {% endif %}            
+    
+        
+    </div>
+</body>
+</html>

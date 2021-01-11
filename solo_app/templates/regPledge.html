@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">   
+    <title>Welcome to the CommunEty -register</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Welcome to the CommunEty</h1>
+        <a class="float-right" href="/communety/logout">Log Out</a>        
+       
+        <br>
+            <h3>Your pledge to the CommunEty</h3>           
+            <p>    
+                Be helpful -by sharing this space in a constructive way<br>
+                Be respectul -by building a strong relationship with your neighbor<br>
+                Be inclusive -by including all your neighbors<br>
+                Be responsible -by not doing any scams or physical harm<br>
+            </p>
+            <p>Read more about <a href="/communety/guidelines">CommunEty's guidelines</a></p>
+
+        <hr><br>    
+            <h3>Register</h3>
+            <form action="/communety/register" method="POST">
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            <br>
+                {% csrf_token %}
+                    {{ regForm.as_p }}
+                <button class="btn btn-primary">Register and acknowledge pledge</button>
+            </form> 
+    </div>
+</body>
+</html>

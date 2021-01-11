@@ -1,0 +1,22 @@
+*{
+    margin:0;
+    padding:0;
+   
+}
+
+.container{
+    
+    width: 1000px;
+    height: auto;
+    background-color: rgb(196, 221, 221);
+}
+
+h1{
+    color: rgb(0, 136, 136);
+   
+}
+
+h5{
+    color: rgb(14, 21, 117)
+}
+

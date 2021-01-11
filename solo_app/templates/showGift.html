@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">   
+    <title>Show</title>
+</head>
+<body>
+    <div class="container">  
+        <h1>Gift id: {{ one_gift.id }}</h1>
+        <br>
+        <a href="/communety/newGift">Back to New Gift</a>  |  <a href="/communety/dashboard"><strong>Go to Dashboard </strong></a>  <a class="float-right"  href="/communety/logout">Log Out</a> 
+        <br><br>
+        <p><strong>Name: </strong> {{ one_gift.name }}</p>
+        <p><strong>Category: </strong> {{ one_gift.categoryJoin.category }}</p>
+        <p><strong>Status: </strong>
+            {% if one_gift.status == 0 %} 
+            Pending
+            {% else %}
+            Completed
+            {% endif %}         
+        </p>
+        <p><strong>Available Date: </strong> {{ one_gift.available_date|date:"SHORT_DATE_FORMAT" }}</p>
+        <p><strong>Description: </strong> {{ one_gift.description }}</p>
+        <p><strong>Created Date: </strong> {{ one_gift.created_at|date:'M d, Y P'  }} </p>
+        <p><strong>Last Updated: </strong> {{ one_gift.updated_at }}</p>
+        <br>
+        {% if one_gift.status == 0 %} 
+        <a href="/communety/{{one_gift.id}}/edit">Edit</a> | <a href="/communety/{{one_gift.id}}/delete">Delete</a> 
+        {% endif %}
+        <br><br>
+    </div>  
+
+</body>
+</html>

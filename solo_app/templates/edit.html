@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">   
+    <title>Edit Gift</title>
+</head>
+<body>
+    
+    <div class="container">  
+
+        <h2>Edit Gift:  {{ one_gift.id }}</h2>
+        <a class="float-right" href="/communety/newGift">Back to New Gift</a>
+        <br>
+        {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action='/communety/{{ one_gift.id}}/update'  method="POST">
+            {% csrf_token %}            <!--this prevents csrf error -should ALWAYS be here!! --> 
+            <div class="form-group">
+                <label for="name">Short Name:</label> 
+                <input type="text" name="name" id="name"  value="{{one_gift.name}}" class="form-control">
+            </div>
+            <!-- how can I use my status and category here????? -maybe not needed-->
+            <div class="form-group">
+                <label for="date">Available Date:</label> 
+                <input type="date" name="available_date" id="available_date"   value="{{one_gift.available_date|date:'Y-m-d'}}"  class="form-control">       
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" name="description" id="description"   rows="3">{{one_gift.description}}</textarea>
+            </div>           
+            <button class="btn btn-primary">Edit Gift</button>
+            <br>
+        </form>  
+        
+    </div>
+</body>
+</html>

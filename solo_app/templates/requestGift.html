@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styleNewGift.css' %}">   
+    <title>Request</title>
+</head>
+<body>
+    <div class="container">  
+        <h1>We are happy to process your request for Gift id: {{ one_gift.id }}</h1>
+        <br>
+        <a href="/communety/dashboard">Go to Dashboard</a>  <a class="float-right"  href="/communety/logout">Log Out</a> 
+        <br><br><br>
+        <p><strong>Name: </strong> {{ one_gift.name }}</p>
+        <p><strong>Category: </strong> {{ one_gift.categoryJoin.category }}</p>
+        <p><strong>Description: </strong> {{ one_gift.description }}</p>
+        <br><br>
+        <p>Just as a reminder, you can only request one gift every 30 days. <br>
+            This is to give the opportunity to other members of the CommunEty to enjoy the fruitfulness of our members.</p>
+        <br><br>   
+        <p><strong>A confirmation email has been sent to you as well as to the gif provider<br>
+            please follow the instructions provided in your confirmation email. </strong></p>
+        <br><br><br>
+        <h6>Gratitud and reciprocity are the currency of our CommunEty -Enjoy your gift!</h6>
+        <br><br>
+    </div>  
+
+</body>
+</html>
