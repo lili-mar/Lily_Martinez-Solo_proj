@@ -32,9 +32,6 @@ class UserManager(models.Manager):
             errors['email'] = 'Invalid Email Address'
         
         existing_user = User.objects.filter(email=postData['email'])
-                # email_check = self.filter(email=postData['email'])
-                # if email_check:
-                #     errors['email'] = "Email already in use"
         if len(existing_user) !=0:
             errors['user'] = "Email already in use"
         
@@ -82,7 +79,7 @@ class User(models.Model):
     objects = UserManager()
     
 #-------------------end of USER ---------------------------------------------------------
-class Category(models.Model):    #join as OneToOne with Gift (rather than being part/column in Gift table)
+class Category(models.Model):    #join as OneToMany with Gift (rather than being part/column in Gift table)
     category = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -112,8 +109,8 @@ class Gift(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     categoryJoin = models.ForeignKey(Category, related_name="gift_Join",null=True,on_delete=models.CASCADE)
-    creator = models.ForeignKey(User, related_name="has_created_gifts", on_delete=models.CASCADE) #OneUser can upload/create ManyGifts
-    favorited_by = models.ManyToManyField(User, related_name="favorited_gifts")     #liker and liked
+    creator = models.ForeignKey(User, related_name="has_created_gifts", on_delete=models.CASCADE) #OneUser can create ManyGifts
+    favorited_by = models.ManyToManyField(User, related_name="favorited_gifts")     #liker and liked -incorporate later 
     
     objects = GiftManager()
     

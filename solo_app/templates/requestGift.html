@@ -14,18 +14,26 @@
         <br>
         <a href="/communety/dashboard">Go to Dashboard</a>  <a class="float-right"  href="/communety/logout">Log Out</a> 
         <br><br><br>
-        <p><strong>Name: </strong> {{ one_gift.name }}</p>
-        <p><strong>Category: </strong> {{ one_gift.categoryJoin.category }}</p>
-        <p><strong>Description: </strong> {{ one_gift.description }}</p>
-        <br><br>
-        <p>Just as a reminder, you can only request one gift every 30 days. <br>
-            This is to give the opportunity to other members of the CommunEty to enjoy the fruitfulness of our members.</p>
-        <br><br>   
-        <p><strong>A confirmation email has been sent to you as well as to the gif provider<br>
-            please follow the instructions provided in your confirmation email. </strong></p>
-        <br><br><br>
-        <h6>Gratitud and reciprocity are the currency of our CommunEty -Enjoy your gift!</h6>
-        <br><br>
+
+
+        <div class="card">                   
+            <div class="card-body">
+                <p><strong>Name: </strong> {{ one_gift.name }}</p>
+                <p><strong>Category: </strong> {{ one_gift.categoryJoin.category }}</p>
+                <p><strong>Description: </strong> {{ one_gift.description }}</p>
+                <br>
+                <p style="display:inline; color:blue;">Just as a reminder, you can only request one gift every 30 days. <br>
+                    This is to give the opportunity to other members of the CommunEty to enjoy the fruitfulness of our members.</p>
+                <br><br><br>
+                <p><strong>A confirmation email has been sent to you as well as to the gif provider<br>
+                    please follow the instructions provided in your confirmation email. </strong></p>
+                <br><br><br>
+                <h6>Gratitude and reciprocity are the currency of our CommunEty -Enjoy your gift!</h6>
+                <br>
+            </div>
+        </div>
+
+     
     </div>  
 
 </body>

@@ -1,19 +1,19 @@
 *{
-    margin:0;
-    padding:0;
-   
+    margin:0px;
+    padding:0px;
+    /* background-color: rgb(196, 221, 221); */
 }
 
 .container{
     
-    width: 1000px;
+    width: 2000px;
     height: auto;
-    background-color: rgb(196, 221, 221);
+    background-color: lightblue;
 }
 
 h1{
     color: rgb(0, 136, 136);
-   
+    text-emphasis-color:bold;
 }
 
 h5{

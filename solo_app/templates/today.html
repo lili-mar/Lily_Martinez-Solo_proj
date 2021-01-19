@@ -11,26 +11,62 @@
 <body>
     
     <div class="container">
-        <h1>Our CommunEty today - {{ user.first_name}} </h1>
+        
+        <h1 class="display-4" ><strong>Our CommunEty today - {{ user.first_name}}</strong></h1>
         <a class="float-right" href="/communety/logout">Log Out</a>      
         <br><br>
+             
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">       
+                <li class="nav-item">
+                  <a class="nav-link" href="/communety/dashboard"><button class="btn btn-primary btn-lg"><strong>Looking for something?</strong></button></a>
+                </li>
+              </ul>
+                <a href="/communety/newGift"><button class="btn btn-success btn-lg"><strong>Sharing something?</strong></button></a>
+            </div>
+        </nav>
+        <br>
+        <hr> 
         
-        <p> show right here the community block - google map!!</p>
-
+        <!-- location where map will show up -->
+        <div id="map"></div> 
         <br><br>
-        <p>The google map should show the community address of the logged user: <br>
-            {{ user.street_address }}<br>
-            {{ user.city}} , {{ user.state}}<br>
-            {{ user.zip_code}}
-        </p>
-        <br><br>
-       
-        <hr>        
-        <a href="/communety/newGift"><button class="btn btn-success">Sharing something?</button></a>
-        <br><br>
-        <a href="/communety/dashboard"><button class="btn btn-primary">Looking for something?</button></a>
-        <br><br>
-         
+        
+        
     </div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjWl3sQ7qCYCBGblcwkx7POWFGz0NyWvk&callback=initMap"
+    type="text/javascript">
+    </script>
+
+    <script>
+        console.log("testing if our script is running")
+        function initMap() {
+            console.log("testing initializing map")
+            // initialize our geocoder
+            geocoder = new google.maps.Geocoder();
+          
+            geocoder.geocode( { 'address': "{{ user.street_address }} {{ user.city}} , {{ user.state}} {{ user.zip_code}}" }, function(results, status) {
+                if (status == 'OK') {
+                    console.log(results)
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 12,
+                        center: results[0].geometry.location,
+                    });
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        zoom: 4
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+
+        }
+    </script>
+
 </body>
 </html>

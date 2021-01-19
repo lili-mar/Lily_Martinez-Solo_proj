@@ -15,12 +15,12 @@ Including another URLconf
 """
 
 from django.urls import path, include           # import include
-# from django.contrib import admin              # comment out, or just delete
+# from django.contrib import admin              # will work on it
 from django.conf import settings
 
 urlpatterns = [
     path('communety/', include('solo_app.urls')),	   
-    # path('admin/', admin.sites.urls)         # comment out, or just delete
+    # path('admin/', admin.sites.urls)         # will start working on it
 ]
 
 if settings.DEBUG:

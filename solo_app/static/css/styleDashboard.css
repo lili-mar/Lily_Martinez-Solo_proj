@@ -1,0 +1,48 @@
+*{
+    margin:0;
+    padding:0;
+   
+}
+
+
+body{
+    background-color: rgb(196, 221, 221); 
+    text-emphasis-color:bold;
+}
+
+
+h1{
+    color:teal;
+    text-emphasis-color:initial;
+    font-size: 45px;
+    text-align: center;
+}
+
+h3{
+    color: teal;
+    background-color: lightgoldenrodyellow;
+  
+}
+
+
+a{
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    background-color:darkcyan;
+
+}
+  
+tr:nth-child(even) {
+    background-color: #dddddd;
+    /* background-color: rgba(255, 166, 0, 0.829); 
+    background-color: rgba(#FCE205);   */
+}
+

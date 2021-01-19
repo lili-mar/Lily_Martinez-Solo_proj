@@ -3,12 +3,27 @@
     padding:0;
 }
 
+body{
+    background-color: rgb(196, 221, 221); 
+    text-emphasis-color:bold;
+}
+
+
 h1{
     color:teal;
-   
+    text-emphasis-color:bold;
+    text-align: center;
 }
 
 
 h4{
     color: rgb(9, 51, 47);
+}
+
+#map {
+    height: 500px;
+    /* The height is 400 pixels */
+    width: 100%;
+    /* The width is the width of the web page */
+    text-emphasis-color:bold;
 }

@@ -5,45 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styleNewGift.css' %}">   
+    <link rel="stylesheet" href="{% static 'css/styleDashboard.css' %}">   
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="container">
-                  
+    <div class="container">            
         <h1>Our CommunEty's gifts - {{ logged_user.first_name }}!</h1>
         <br>
-        <a href="/communety/today">Back to CommunEty Today</a> 
       
-        <a class="float-right" href="/communety/logout">Log Out</a>
-        <br><br>
-        <h3>Active and available gifts for the CommunEty</h3>     
-        <table class="table table-sm">
-            <thead>
-                <tr>
-                    <th>Gift Name</th>
-                    <th>Category</th>                                                
-                    <th colspan="2">Actions</th>                  
-                </tr>
-            </thead>
-            {% for gift in sortGifts %}  
-            {% if gift.status == 0 %} <!--only pending-->                     
-            <tbody>
-                <tr>
-                    <td>{{ gift.name }}</td>
-                    <td>{{  gift.categoryJoin.category  }}</td>                                     
-                    <td><a href="/communety/{{gift.id}}/request">Request</a></td> 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">       
+                <li class="nav-item">
+                  <a class="nav-link" href="/communety/today"><strong>Back to CommunEty Today</strong> </a>
+                </li>
+              </ul>
+                <a href="/communety/logout"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log Out</button></a>
+            </div>
+        </nav>
 
-                        <!-- it will probably need to be called with an ID later on -->                                    
-                        <td><a href="/communety/theWall">Message</a></td> 
-                        
-                </tr>
-            </tbody> 
-            {% endif %}               
-            {% endfor %}
+          <br><br>
+          <div class="card">           
+            <div class="card-body">
+                <h3 class="card-title">Active and available gifts for the CommunEty</h3>
+                <table class= "table table-dark table-sm">
+      
+                  <thead class="thead-light">
+                      <tr>
+                          <th>Gift Name</th>
+                          <th>Category</th>                                                
+                          <th colspan="2">Actions</th>                  
+                      </tr>
+                  </thead>
+                  {% for gift in sortGifts %}  
+                    {% if gift.status == 0 %} <!--only pending-->  
+                      {% if logged_user.id != gift.creator_id %}  <!--Do not show logged_user -gifts-->  
+                        <tbody>
+                            <tr>
+                                <td>{{ gift.name }}</td>
+                                <td>{{  gift.categoryJoin.category  }}</td>                                     
+                                <td><a href="/communety/{{gift.id}}/request">Request</a></td> 
             
-        </table>
-    
+                                    <!-- it will probably need to be called with an ID later on -->                                    
+                                    <td><a href="/communety/theWall">Message</a></td>             
+                            </tr>
+                        </tbody> 
+                      {% endif %}   
+                    {% endif %}               
+                  {% endfor %}
+                </table>
+            </div>
+          </div>
     </div>
 </body>
 </html>

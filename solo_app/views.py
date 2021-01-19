@@ -2,9 +2,10 @@ from django.shortcuts import render, HttpResponse, redirect  #test HttpResponse
 from .models import *               #import ALL models
 from django.contrib import messages     #validation
 import bcrypt
-from .forms import RegForm
+from .forms import RegForm          #django forms
 from .forms import LogForm
 from datetime import datetime
+
 
 
 #Login/Reg = localhost:8000/communEty
@@ -15,7 +16,6 @@ def landing(request):
     }
     return render(request, 'landing.html', context)
 
-
 def login(request):
     if request.method == 'POST':
         print(request.POST) #should see QueryDict
@@ -25,14 +25,9 @@ def login(request):
         if len(errors)>0:
             for key, value in errors.items():
                 messages.error(request, value)
-                
-            # context = {      
-            #     'logForm': LogForm(),
-            # }
-            
-            #return render(request, 'partialMsgs.html', context)  #AJAX!!!
-                
-            return redirect('/communety')    #redirect the user back to the form to fix the errors
+           
+            return render(request, 'partialMsgs.html')  #AJAX!!!        
+            #return redirect('/communety')    #redirect the user back to the form to fix the errors
         else:
             
             this_user = User.objects.get(email = request.POST['email'])   
@@ -41,9 +36,7 @@ def login(request):
             return redirect('/communety/today')
   
 def asAnExample(request):  
-    return render(request, 'Example.html')
-
-          
+    return render(request, 'Example.html')    
         
 def regPledge(request):
     request.session.flush()
@@ -60,7 +53,8 @@ def register(request):
         if len(errors)>0:
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect('/communety/regPledge')    #redirect the user back to the form to fix the errors
+            return render(request, 'partialMsgs.html')  #AJAX!!!
+            #return redirect('/communety/regPledge')    #redirect the user back to the form to fix the errors
         else:
             hashed_pw = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()    
             new_user = User.objects.create(
@@ -78,21 +72,11 @@ def register(request):
 
 def guidelines(request):  
     return render(request, 'guidelines.html')
-
-
-# replace with Your NEW APPLICATION    
+   
 def logout(request):
     request.session.clear()
     return redirect('/communety')
 
-def success(request):
-    if 'user_id' not in request.session:
-        return redirect('/communety')
-    user = User.objects.get(id=request.session['user_id'])
-    context = {
-        'user': user
-    }
-    return render(request, 'success.html', context)
 
 def today(request):
     if 'user_id' not in request.session:
@@ -103,28 +87,18 @@ def today(request):
     }
     return render(request, 'today.html', context)
 
-#display(newGift.html via link in landing.html) and then create_gift
+#display(newGift.html via link in landing.html) and then create_gift -sort by created date
 def newGift(request):
     if 'user_id' not in request.session:
         return redirect('/communety/today')
          
     user = User.objects.get(id=request.session['user_id'])
     my_gifts = Gift.objects.filter(creator_id = request.session['user_id']).order_by("-created_at")
-    #future = Gift.objects.filter(datetime.strptime(available_date, "%d/%m/%Y"))
-    #future = Gift.objects.filter(date__range=[available_date, "2040-01-31"])
-    #future = Gift.objects.filter(date__range=[Gift.objects.filter(available_date), "2040-01-31"])
-    #today = datetime.now()
-    #greater = future.date() > today.date()
-    #print (today)
-    #print (future) 
-    #####User.objects.all().order_by ("-first_name")
     context = {
         "categs_list": Category.objects.all(),
         "gifts_list": Gift.objects.all(),   
         "logged_user": user, 
         "my_gifts" : my_gifts, 
-        #"my_gifts" : my_gifts.objects.all().order_by("-available_date"),  
-        #"greater" :   greater, 
     }   
     return render(request, 'newGift.html', context) 
 
@@ -145,7 +119,6 @@ def create_gift(request):
                 description = request.POST['description'],
                 available_date = request.POST['available_date'],
                 categoryJoin_id=request.POST['categoryJoin'],
-                #categoryOneJoin_id=Category.objects.get(id=request.POST['categoryOneJoin']),
                 creator = user, 
                 status = False,
             )
@@ -184,22 +157,18 @@ def update(request, gift_id):
             gift = this_gift[0]
             gift.name = request.POST['name']
             print(this_gift[0].name)
-            #gift.categoryJoin=request.POST['categoryJoin']
-            #gift.status = request.POST['status']
             gift.description = request.POST['description']
             gift.available_date = request.POST['available_date']
             gift.save()       #DON'T FORGET otherwise it won't update!!!
             #messages.success(request, "Gift successfully updated")
             return redirect(f'/communety/{gift_id}/show')  
 
-
 def delete(request, gift_id):
-    to_delete = Gift.objects.get(id=gift_id)    #This works but it is recommended to do it as POST see booksAuthors_proj
+    to_delete = Gift.objects.get(id=gift_id)    
     to_delete.delete()
-    #return redirect('/communety/dashboard')
     return redirect('/communety/newGift')
 
-
+#sort the dashboard  by category
 def dashboard(request):
     if 'user_id' not in request.session:
         return redirect('/communety/today')

@@ -4,12 +4,10 @@
    
 }
 
-.container{
-    
-    width: 2000px;
-    height: auto;
-    background-color: rgb(196, 221, 221);
+body{
+    background-color: rgb(196, 221, 221); 
 }
+
 
 h1{
     color:teal;
